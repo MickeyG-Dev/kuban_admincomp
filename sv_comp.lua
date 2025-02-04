@@ -1,5 +1,5 @@
 local QBCore = exports['qb-core']:GetCoreObject()
-local webhookURL = Config.Webhook
+local webhookURL = "YOUR_WEBHOOK_HERE" 
 
 local function generateCompCode()
     local charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -29,15 +29,15 @@ local function saveCompCode(code, item, amount)
 end
 
 local function deleteCompCode(code)
-    MySQL.Async.execute("DELETE FROM kuban_comp WHERE code = @code", {["@code"] = code})
+    MySQL.Async.execute("DELETE FROM kuban_comp WHERE code = @code", { ["@code"] = code })
 end
 
 local function logToDiscord(title, description, color)
     PerformHttpRequest(webhookURL, function(err, text, headers)
         if err ~= 200 then
-            print("^2[KubanScripts] Discord webhook Success^0")
+            print("^1[KubanScripts] Failed to send Discord webhook!^0")
         end
-    end, "POST", json.encode({embeds = {{["title"] = title, ["description"] = description, ["color"] = color}}}), {["Content-Type"] = "application/json"})
+    end, "POST", json.encode({embeds = {{["title"] = title, ["description"] = description, ["color"] = color}}}), { ["Content-Type"] = "application/json" })
 end
 
 QBCore.Commands.Add("createcomp", "Open the compensation menu", {}, true, function(source)
@@ -67,7 +67,7 @@ QBCore.Commands.Add("claimcomp", "Claim a compensation reward", {
 }, false, function(source, args)
     local code = args[1]
 
-    MySQL.Async.fetchAll("SELECT * FROM kuban_comp WHERE code = @code", {["@code"] = code}, function(result)
+    MySQL.Async.fetchAll("SELECT * FROM kuban_comp WHERE code = @code", { ["@code"] = code }, function(result)
         if not result or #result == 0 then
             TriggerClientEvent("QBCore:Notify", source, "Invalid or expired compensation code!", "error")
             return

@@ -1,5 +1,4 @@
 Config = {}
-Config.Webhook = 'YOUR_WEBOOK_HERE'
 Config.Inventory = "qb" -- Only ox or qb
 Config.MenuType = "qb" -- Change to "qb" if you want qb-menu instead
 
