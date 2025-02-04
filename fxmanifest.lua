@@ -3,7 +3,7 @@
 -- █████╔╝ ██║   ██║██████╔╝███████║██╔██╗ ██║███████╗██║     ██████╔╝██║██████╔╝   ██║   ███████╗
 -- ██╔═██╗ ██║   ██║██╔══██╗██╔══██║██║╚██╗██║╚════██║██║     ██╔══██╗██║██╔═══╝    ██║   ╚════██║
 -- ██║  ██╗╚██████╔╝██████╔╝██║  ██║██║ ╚████║███████║╚██████╗██║  ██║██║██║        ██║   ███████║
--- ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝        ╚═╝   ╚══════╝                                                                                            
+-- ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝        ╚═╝   ╚══════╝                                                                                           
 -- https://discord.gg/UzVbtKEzgN 
 
 fx_version 'cerulean'
@@ -16,7 +16,7 @@ version '1.0.1'
 
 author 'KubanScripts'
 
-description 'Admin Compensation Resource using ox_lib'
+description 'Admin Compensation Resource using ox_lib and qb-menu'
 
 shared_script {
     '@ox_lib/init.lua',
@@ -29,9 +29,9 @@ server_scripts {
     'version.lua',
     'sv_comp.lua',
     '@oxmysql/lib/MySQL.lua'
-
 }
+
 escrow_ignore {
     'version.lua',
-    'config.lua',
+    'config.lua'
 }

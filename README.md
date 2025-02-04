@@ -4,6 +4,7 @@
 - Supported frameworks: ESX, QBCore & Qbox 
 - Supports ox_target
 - Install Provided SQL File
+- Added Function to use ox_menu or Qb-menu
 
 Preview: [Click Here](https://www.youtube.com/watch?v=4SU52zxiX1c)
 Discord: [Click Here](https://discord.com/invite/UzVbtKEzgN)

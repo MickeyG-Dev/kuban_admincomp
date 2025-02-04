@@ -8,28 +8,37 @@ AddEventHandler("kuban-comp:client:OpenCreateCompMenu", function()
 end)
 
 function openCompensationMenu()
+    if Config.MenuType == "ox" then
+        openOxMenu()
+    elseif Config.MenuType == "qb" then
+        openQbMenu()
+    else
+        print("Invalid MenuType in Config")
+    end
+end
+
+function openOxMenu()
     local options = {
         {
-            title = "Item: " .. (selectedItem or "Not Set"),
+            title = "Select Item",
+            description = selectedItem and ("Current: " .. selectedItem) or "Not Set",
             icon = "box",
-            iconColor = selectedItem and "green" or "red",
             event = "kuban-comp:client:SelectItem"
         },
         {
-            title = "Amount: " .. (selectedAmount or "Not Set"),
+            title = "Select Amount",
+            description = selectedAmount and ("Current: " .. selectedAmount) or "Not Set",
             icon = "hashtag",
-            iconColor = selectedAmount and "green" or "red",
             event = "kuban-comp:client:SelectAmount"
         },
         {
             title = "Create Compensation",
             icon = "plus",
-            iconColor = (selectedItem and selectedAmount) and "green" or "red",
-            event = "kuban-comp:client:ConfirmCompensation",
-            disabled = (not selectedItem or not selectedAmount)
+            disabled = (not selectedItem or not selectedAmount),
+            event = "kuban-comp:client:ConfirmCompensation"
         }
     }
-
+    
     lib.registerContext({
         id = "comp_main_menu",
         title = "Create Compensation",
@@ -38,9 +47,41 @@ function openCompensationMenu()
     lib.showContext("comp_main_menu")
 end
 
+function openQbMenu()
+    local menu = {
+        {
+            header = "Create Compensation",
+            isMenuHeader = true
+        },
+        {
+            header = "Select Item",
+            txt = selectedItem and ("Current: " .. selectedItem) or "Not Set",
+            params = {
+                event = "kuban-comp:client:SelectItem"
+            }
+        },
+        {
+            header = "Select Amount",
+            txt = selectedAmount and ("Current: " .. selectedAmount) or "Not Set",
+            params = {
+                event = "kuban-comp:client:SelectAmount"
+            }
+        },
+        {
+            header = "Create Compensation",
+            txt = "Confirm Selection",
+            params = {
+                event = "kuban-comp:client:ConfirmCompensation"
+            },
+            disabled = (not selectedItem or not selectedAmount)
+        }
+    }
+    exports["qb-menu"]:openMenu(menu)
+end
+
 RegisterNetEvent("kuban-comp:client:SelectItem")
 AddEventHandler("kuban-comp:client:SelectItem", function()
-    local input = lib.inputDialog("Select Item", {
+    local input = lib.inputDialog("Enter Item Name", {
         { type = "input", label = "Item Name", required = true }
     })
     
@@ -52,31 +93,12 @@ end)
 
 RegisterNetEvent("kuban-comp:client:SelectAmount")
 AddEventHandler("kuban-comp:client:SelectAmount", function()
-    local input = lib.inputDialog("Select Amount", {
+    local input = lib.inputDialog("Enter Amount", {
         { type = "number", label = "Amount", required = true, min = 1 }
     })
     
     if input and input[1] then
         selectedAmount = input[1]
-        openCompensationMenu()
-    end
-end)
-
-
-RegisterNetEvent("kuban-comp:client:SetPlayer")
-AddEventHandler("kuban-comp:client:SetPlayer", function(playerId)
-    selectedPlayer = playerId
-    openCompensationMenu()
-end)
-
-RegisterNetEvent("kuban-comp:client:SelectOfflinePlayer")
-AddEventHandler("kuban-comp:client:SelectOfflinePlayer", function()
-    local input = lib.inputDialog("Enter Offline Player ID", {
-        { type = "number", label = "Player ID", required = true }
-    })
-
-    if input and input[1] then
-        selectedPlayer = input[1]
         openCompensationMenu()
     end
 end)
